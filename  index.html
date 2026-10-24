@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>優優媽咪美股網站｜體驗版</title>
+<style>
+:root{--teal:#1F5E5B;--teal2:#2E8B73;--ink:#1E2A2A;--mute:#4A5656;--line:#DDE1DA;--soft:#EEF0EC;--bg:#F4F5F1;--warn:#A3501A;--orange:#C9641E}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;line-height:1.6}
+a{color:var(--teal)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.top{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;padding:10px 0}
+.brand{font-weight:700;font-size:18px;color:var(--teal);margin-right:6px}
+.nav{display:flex;flex-wrap:wrap;gap:4px}
+.nav button{min-height:44px;padding:0 12px;border:0;background:none;font-size:15px;color:var(--mute);cursor:pointer;font-family:inherit;border-radius:10px}
+.nav button.on{color:var(--teal);font-weight:700;background:#E6EFEC}
+.mode{border-bottom:1px solid var(--line);padding:10px 0;font-size:15px}
+.mode.free{background:#FFF1D6;color:#6B4A12}.mode.mem{background:#E6EFEC;color:#143F3D}
+.mode .wrap{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
+main{padding:20px 0 40px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px}
+h1{font-size:26px;margin:4px 0 0}h2{font-size:19px;margin:0 0 4px}h3{font-size:16px;margin:0 0 6px}
+.sub{font-size:14px;color:var(--mute)}.small{font-size:13px;color:var(--mute)}
+.pill{min-height:44px;padding:0 16px;border-radius:22px;border:1px solid #C9CFC6;background:#fff;color:var(--ink);font-size:15px;cursor:pointer;font-family:inherit}
+.pill.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+.btn{min-height:44px;padding:0 20px;border-radius:22px;border:0;background:var(--teal);color:#fff;font-size:15px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;text-decoration:none}
+.btn.line{background:#fff;color:var(--teal);border:1px solid var(--teal)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.box{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}
+.row{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;padding:12px 0;border-bottom:1px solid var(--soft)}
+.row:last-child{border-bottom:0}
+.grow{flex:1 1 280px;min-width:0}
+select,input,textarea{font-family:inherit;font-size:16px;min-height:44px;border:1px solid #C9CFC6;border-radius:10px;padding:0 10px;background:#fff}
+textarea{padding:8px 10px;width:100%}
+.tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:13px;font-weight:700}
+.rung{background:#FBE3D2;color:#8A3A0C}.wait{background:var(--soft);color:var(--mute)}
+.lock{display:flex;gap:10px;align-items:center;background:#fff;border:1px dashed #B9C0B6;border-radius:12px;padding:14px;color:var(--mute)}
+.lock svg{flex:0 0 auto}
+.banner{background:var(--teal);color:#fff;border-radius:14px;padding:16px 18px;margin-bottom:16px}
+.banner .sub,.banner .small{color:#DCEBE7}
+.station{text-align:left;cursor:pointer;font-family:inherit;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;min-height:96px}
+.station:hover{border-color:var(--teal)}
+.bar{height:8px;border-radius:4px;background:var(--soft);margin-top:8px}.bar i{display:block;height:8px;border-radius:4px;background:var(--teal2)}
+.entry{display:flex;gap:10px;align-items:center;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--soft);padding:12px 4px;min-height:48px;cursor:pointer;font-family:inherit;font-size:16px;color:var(--ink)}
+.entry:hover{background:#F8FAF7}
+.ck{width:22px;flex:0 0 22px;color:var(--teal2);font-weight:700}
+.moats{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.moat{text-align:left;min-height:64px;padding:12px 14px;border-radius:12px;border:1px solid #C9CFC6;background:#fff;cursor:pointer;font-family:inherit;color:var(--ink)}
+.moat.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+.tbl{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:15px;min-width:760px}
+th{text-align:left;color:var(--mute);font-size:13px;padding:8px;font-weight:500}td{padding:8px;border-top:1px solid var(--soft);vertical-align:top}
+.pies{display:flex;flex-wrap:wrap;gap:28px;justify-content:center}.pie{width:180px;height:180px;border-radius:50%;margin:0 auto}
+figure{margin:0;text-align:center}figcaption{margin-top:8px;font-weight:700}
+.dot{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:middle}
+.hint{background:#E6EFEC;border-radius:10px;padding:12px 14px;font-size:15px}
+.check{display:flex;gap:10px;align-items:center;padding:6px 0}.check input{width:20px;height:20px;min-height:0}
+.feedback{background:#fff;border:2px dashed var(--teal);border-radius:14px;padding:18px;margin-top:8px}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.chart{width:100%;max-width:420px;height:auto;display:block}
+.cmp td,.cmp th{font-size:14px}
+footer{font-size:13px;color:var(--mute);padding:16px 0 40px}
+.hide{display:none!important}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap top">
+<div class="brand">優優媽咪</div>
+<nav class="nav" aria-label="主選單">
+<button data-page="wiki" class="on">美股百科全書</button>
+<button data-page="fin">美股財報網站</button>
+<button data-page="student">學員專區</button>
+<button data-page="course">課程與活動</button>
+</nav>
+</div>
+</header>
+<div id="modeBar" class="mode free"><div class="wrap">
+<div>你現在看的是：<b id="modeLabel">免費讀者畫面（沒登入）</b>　<span class="small" style="color:inherit">體驗版，數字都是示意，不是投資建議</span></div>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="pill" id="diffBtn">免費和學員差在哪？</button><button class="pill on" id="modeBtn">切換成學員畫面</button></div>
+</div></div>
+
+<main class="wrap">
+<div id="diffBox" class="card hide">
+<h2>免費和學員差在哪？</h2>
+<div class="tbl"><table class="cmp" style="min-width:520px">
+<thead><tr><th>內容</th><th>免費讀者</th><th>學員</th></tr></thead>
+<tbody>
+<tr><td>美股百科全書：七站文章、影片</td><td>✓</td><td>✓</td></tr>
+<tr><td>百科文章裡的「學員專區」補充</td><td>看得到標題</td><td>✓</td></tr>
+<tr><td>財報網站：公司資料、怎麼賺錢</td><td>✓</td><td>✓</td></tr>
+<tr><td>財報體檢、護城河、風險、總分、估價、podcast</td><td>只看得到標題</td><td>✓</td></tr>
+<tr><td>我的最愛、鈴鐺 email 提醒、每一格的筆記</td><td>—</td><td>✓</td></tr>
+<tr><td>我的菜盤、買賣紀錄、12 月複盤</td><td>—</td><td>✓</td></tr>
+<tr><td>學員專區：每月直播、實體課回放、新生指南</td><td>看得到每月標題</td><td>✓</td></tr>
+</tbody></table></div>
+</div>
+
+<!-- ========== 美股百科全書 ========== -->
+<section id="p-wiki">
+<div id="wikiHome">
+<div class="card">
+<h1>美股百科全書</h1>
+<div class="sub">新手投資美股會卡住的問題，一個問題一篇，照你現在的狀態一站一站走</div>
+<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+<label for="search" class="hide">搜尋</label>
+<input id="search" placeholder="搜尋：例如 複委託、3000、ETF" style="flex:1 1 260px">
+</div>
+<div id="searchResult" class="small" style="margin-top:6px"></div>
+</div>
+<div id="continueBox" class="card hide"></div>
+<div class="card">
+<h2>你在哪一步？</h2>
+<div class="sub" style="margin-bottom:10px">選一個最像你的，帶你到對的那一站</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px">
+<button class="pill" data-go="1">還在想要不要投美股</button>
+<button class="pill" data-go="2">還沒開戶</button>
+<button class="pill" data-go="3">開好戶了，不知道買什麼</button>
+<button class="pill" data-go="4">想學怎麼挑好公司</button>
+<button class="pill" data-go="5">想知道錢怎麼分</button>
+</div>
+</div>
+<h2 style="margin:20px 0 10px">七站</h2>
+<div class="grid" id="stationGrid"></div>
+<div class="grid" style="margin-top:16px">
+<div class="card" style="margin:0"><h2>大家最常問</h2><div id="topList"></div></div>
+<div class="card" style="margin:0"><h2>優優的金錢觀</h2><div class="sub" style="margin-bottom:6px">想多認識優優，可以從這裡看</div><div id="moneyList"></div></div>
+</div>
+</div>
+<div id="stationPage" class="hide"></div>
+<div id="entryPage" class="hide"></div>
+</section>
+
+<!-- ========== 財報網站 ========== -->
+<section id="p-fin" class="hide">
+<div id="finWelcome" class="card hide" style="display:flex;flex-wrap:wrap;gap:8px 28px;align-items:center">
+<b style="font-size:18px">歡迎回來</b><span class="sub">上次查看：蘋果 AAPL</span><span id="bellSummary" style="color:var(--warn);font-weight:500"></span><span class="sub">財報會員到期：2028/10/24</span>
+</div>
+<div class="tabs" role="tablist">
+<button class="pill on" data-fin="company">公司頁</button><button class="pill" data-fin="fav">我的最愛</button><button class="pill" data-fin="plate">我的菜盤</button><button class="pill" data-fin="log">買賣紀錄</button><button class="pill" data-fin="review">12 月複盤</button>
+</div>
+
+<div id="f-company">
+<div class="card">
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-items:flex-start">
+<div><div class="small">公司資料（免費）</div><h1>Apple 蘋果 <span style="font-size:17px;color:var(--mute);font-weight:500">AAPL</span></h1></div>
+<button id="favBtn" class="btn line mem-only" style="border-color:#C98A2E;color:#7A4B0E"></button>
+</div>
+<div class="grid" style="margin-top:12px"><div><div class="small">產業</div>電腦與手機</div><div><div class="small">目前股價</div>$343.46</div><div><div class="small">財報年度</div>2016–2025</div></div>
+<div style="margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)"><span class="small">怎麼賺錢　</span>賣 iPhone 和電腦，再靠 App 商店和訂閱收錢</div>
+<div class="small" style="margin-top:8px">優優研究過：蘋果、微軟、Google、亞馬遜、Meta、輝達、特斯拉、Costco（體驗版只有蘋果）</div>
+</div>
+
+<div class="free-only">
+<div class="grid" id="lockedTitles"></div>
+<div class="banner" style="margin-top:16px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between"><div>財報幾分、有什麼護城河、多少錢可以買，學員登入就看得到</div><button class="btn line" data-page-go="course" style="background:#fff">了解美股聚寶盆</button></div>
+</div>
+
+<div class="mem-only">
+<div class="banner" id="totalBanner" style="display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline"></div>
+
+<div class="card">
+<h2>1　財報體檢　<span id="finHead" style="color:var(--teal)"></span></h2>
+<div class="sub" style="margin-bottom:6px">先用自動算出的分數，可以用每一項右邊的選單自己調整。分數等級：0～3.5 直接跳過｜4～5.5 還不錯｜6～7 超讚</div>
+<div class="sub" style="margin-bottom:6px">EPS 要十年一路往上，所以只有 EPS 比前一年掉 5% 以上時，線圖會出現<b style="color:var(--orange)">橘點</b>，請你查原因寫下來。每一項下面都有一格筆記，想到什麼都可以記。</div>
+<div id="finList"></div>
+</div>
+
+<div class="card">
+<h2>2　護城河　<span id="moatHead" style="color:var(--teal)"></span></h2>
+<div class="sub">這家公司有什麼讓別人不容易取代的優勢？<b>只勾「很強」的護城河，弱的不要勾。</b></div>
+<div class="sub" style="margin-bottom:12px">1 個很強 = 2 分｜2 個以上 = 3 分｜相信 10 年後公司還在 +1｜本區最高 3 分</div>
+<div class="moats" id="moatList"></div>
+<div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center"><b>相信 10 年後這家公司還在嗎？</b><button class="pill" id="believeYes">相信（+1）</button><button class="pill" id="believeNo">不確定</button></div>
+<div style="margin-top:10px"><label class="small" for="note-moat">我的筆記</label><textarea id="note-moat" rows="2" placeholder="例：iPhone 用習慣了很難換，我身邊的人都這樣…"></textarea></div>
+</div>
+
+<div class="card"><h2>3　風險評估　<span id="riskHead" style="color:var(--warn)"></span></h2><div class="sub" style="margin-bottom:6px">依產業自動判斷，有一項扣 1 分，最多扣 2 分。判斷不對可以自己改。</div><div id="riskList"></div><div style="margin-top:10px"><label class="small" for="note-risk">我的筆記</label><textarea id="note-risk" rows="2" placeholder="我的筆記…（存在你的帳號，12 月複盤會用到）"></textarea></div></div>
+
+<div class="card"><h2>4　總分與結論　<span class="small" style="font-weight:500">7 分以上 = 好公司</span></h2><div id="totalLine" style="font-size:17px"></div><div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:10px;align-items:center" id="conclusions"><b>我的結論：</b></div></div>
+
+<div class="card">
+<h2>5　估價分析：好公司，多少錢可以買？</h2>
+<div class="sub" style="margin-bottom:12px">先看殖利率：<b>低於 2% 是成長股</b>，用下面的估價；2% 以上是股息股，這套估價不適用。</div>
+<h3>估價會用到的數字（最近一年 TTM）</h3>
+<div class="grid">
+<div class="box"><div class="small">殖利率</div><b style="font-size:20px">0.3%</b><div class="small">低於 2%，成長股</div></div>
+<div class="box"><div class="small">PE（現在）</div><b style="font-size:20px">33.18</b><div class="small">現價 ÷ 最近四季 EPS $10.35</div></div>
+<div class="box"><div class="small">5 年 PE</div><b style="font-size:20px">31.24</b><div class="small">這一年＋前 4 年的 PE 平均</div></div>
+<div class="box"><div class="small">PB（現在）</div><b style="font-size:20px">46.7</b><div class="small">現價 ÷ 每股淨值 $7.36</div></div>
+<div class="box"><div class="small">5 年 PB</div><b style="font-size:20px">47.70</b><div class="small">這一年＋前 4 年的 PB 平均</div></div>
+<div class="box"><div class="small">過去一年最高價</div><b style="font-size:20px">$360</b><div class="small">打折法會用到</div></div>
+</div>
+<div class="small" style="margin-top:8px">去哪裡對答案：5 年 PE 的算法跟 StockBoss「價值評估」頁的 5-Year PE 一樣（例：(22.62＋27.93＋38.32＋34.13＋33.18) ÷ 5 ＝ 31.24），可以到 StockBoss 查同一家公司對照。</div>
+<h3 style="margin-top:18px">四種價格怎麼算</h3>
+<div class="grid">
+<div class="box"><b>PE 估價　$323</b><div class="small">合理價 ＝ 5 年 PE × EPS</div><div>31.24 × $10.35 ＝ $323</div><div class="small">條件：EPS 十年穩定向上（財報 EPS 拿 +1）才用</div></div>
+<div class="box"><b>PB 估價　不適用</b><div class="small">合理價 ＝ 5 年 PB × 每股淨值</div><div>每股淨值十年沒有往上（常見原因是大量買回股票、發股息），不用 PB 估價</div></div>
+<div class="box"><b>打折法　$342／$324</b><div class="small">過去一年最高價打折</div><div>$360 × 0.95 ＝ $342<br>$360 × 0.9 ＝ $324</div></div>
+</div>
+<div class="hint" style="margin-top:12px">合理價區間 <b>$324 ～ $342</b>（取可以用的價格裡，最接近現價的兩個）｜現價 $343.46，<b style="color:var(--warn)">稍微偏貴</b>，可以設鈴鐺等股價回到合理價</div>
+<div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center"><label for="myBuy"><b>我想買進的價格 $</b></label><input id="myBuy" inputmode="decimal" value="330" style="width:110px"><span class="small">網站給合理價區間，買進價由你自己決定</span></div>
+<div style="margin-top:10px"><label class="small" for="note-val">我的筆記</label><textarea id="note-val" rows="2" placeholder="例：為什麼我選 $330？"></textarea></div>
+</div>
+
+<div class="card">
+<h2>鈴鐺提醒</h2>
+<div class="sub" style="margin-bottom:6px">從「我想買進的價格」往上加幾塊錢就提醒你，金額可以自己改。鈴鐺響了會寄 email 到你登入的信箱，提醒你回來檢查財報、先算好想買幾股。（體驗版不會真的寄信）</div>
+<div class="row"><label for="b1" class="grow">鈴鐺 1：比我的買進價高</label><input id="b1" inputmode="decimal" value="10" style="width:70px">元<span class="small" id="b1p"></span><span class="tag" id="b1s"></span></div>
+<div class="row"><label for="b2" class="grow">鈴鐺 2：比我的買進價高</label><input id="b2" inputmode="decimal" value="5" style="width:70px">元<span class="small" id="b2p"></span><span class="tag" id="b2s"></span></div>
+<div class="row"><span class="grow">鈴鐺 3：到了我的買進價</span><span class="small" id="b3p"></span><span class="tag" id="b3s"></span></div>
+<div class="row"><label for="b4" class="grow">鈴鐺 4：我想在這個價格提醒我（不填就不響）</label>$<input id="b4" inputmode="decimal" placeholder="例 350" style="width:90px"><span class="small" id="b4p"></span><span class="tag" id="b4s"></span></div>
+</div>
+
+<div class="card">
+<h2>蘋果的 podcast</h2>
+<div class="sub" style="margin-bottom:6px">年報講全貌，季報講這一季的新變化；舊集數都留著</div>
+<div class="row"><span class="grow"><span class="tag" style="background:#E6EFEC;color:var(--teal)">季報</span>　2026 第 3 季：這一季有什麼新變化</span><button class="btn line">▶ 18 分</button></div>
+<div class="row"><span class="grow"><span class="tag" style="background:#FFF1D6;color:#7A4B0E">年報</span>　2025 年報：蘋果到底靠什麼賺錢</span><button class="btn line">▶ 22 分</button></div>
+<div class="row"><span class="grow"><span class="tag wait">學員自製</span>　2026 第 1 季（學員製作，優優已審核）</span><button class="btn line">▶ 20 分</button></div>
+<div style="margin-top:12px;padding:14px;border-radius:12px;background:var(--bg)">
+<h3>想自己做一集？跟著這五步</h3>
+<ol style="margin:0;padding-left:22px;font-size:14px;line-height:1.9"><li>到美國證券交易委員會（SEC）網站，下載最新年報（10-K）或季報（10-Q）</li><li>打開 NotebookLM，把年報和「護城河類型表」一起上傳</li><li>貼上「優優通用指令」，生成語音摘要</li><li>生成好之後，下載音檔</li><li>上傳到這裡，優優看過、按通過後，所有學員都聽得到</li></ol>
+<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center"><a class="btn line" href="https://youtu.be/2mAfH9zmM7c" target="_blank" rel="noopener">▶ 看 5 分鐘教學影片</a><span class="small">正式版還會放：優優通用指令、護城河類型表下載</span></div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="f-locked" class="card hide"><div class="lock"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6B7570" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><div><b>這一頁是學員專用</b><div class="small">我的最愛、我的菜盤、買賣紀錄、12 月複盤，學員登入後才能用。可以按上面「切換成學員畫面」看看。</div></div></div></div>
+
+<div id="f-fav" class="hide">
+<div class="card"><h2>我的最愛</h2><div class="sub" style="margin-bottom:8px">在公司頁按「加到我的最愛」，就會出現在這裡。一眼看出你在等哪幾家、哪家快到價了。</div>
+<div class="tbl"><table style="min-width:600px"><thead><tr><th>公司</th><th>總分</th><th>現在股價</th><th>我的買進價</th><th>鈴鐺</th><th>我的結論</th></tr></thead><tbody id="favBody"></tbody></table></div>
+<div class="small" style="margin-top:6px">體驗版只有蘋果可以點進去看，其他公司是示意。</div></div>
+</div>
+<div id="f-plate" class="hide">
+<div class="card"><h2>我現在有多少錢（只算投資美股的錢）</h2><div class="sub" style="margin-bottom:12px">股票價值每天用最新股價自動算；現金請你自己更新</div>
+<div class="grid"><div class="box"><div class="small">股票價值（自動）</div><b style="font-size:22px" id="stockValue"></b></div>
+<div class="box"><label for="cash" class="small">現金（自己填）</label><div style="display:flex;align-items:center;gap:4px">$<input id="cash" inputmode="decimal" value="2933" style="width:130px"></div><div class="small" style="color:#8A3A0C">上次更新：30 天前，要更新嗎？</div></div>
+<div class="box"><div class="small">總資產（股票＋現金）</div><b style="font-size:22px" id="totalAssets"></b></div></div></div>
+<div class="card"><h2>目標菜盤 vs 現在菜盤</h2>
+<div class="pies" style="margin:14px 0"><figure><div class="pie" id="pieT" role="img" aria-label="目標菜盤圓餅圖"></div><figcaption>目標菜盤（一年改一次）</figcaption></figure><figure><div class="pie" id="pieN" role="img" aria-label="現在菜盤圓餅圖"></div><figcaption>現在菜盤（從買賣紀錄自動算）</figcaption></figure></div>
+<div class="sub">目標 % 可以直接改。建議最多 10 隻，太多會顧不來。目標加起來：<b id="tSum"></b></div>
+<div class="small">目標股數 ＝ 總資產 × 目標 % ÷ 現在股價（無條件捨去）</div>
+<div class="tbl" style="margin-top:10px"><table><thead><tr><th>股票</th><th>類型</th><th>目標 %</th><th>現在 %</th><th>現在股數</th><th>目標股數</th><th>還要買幾股</th><th>接下來</th></tr></thead><tbody id="plateBody"></tbody></table></div></div>
+</div>
+
+<div id="f-log" class="hide">
+<div class="card"><h2>新增一筆買賣</h2><div class="sub" style="margin-bottom:12px">記下來之後，「我的菜盤」的股數、比例和股票價值會自動更新</div>
+<div class="grid"><label class="small">股票<select id="fs" style="width:100%;margin-top:4px"></select></label><label class="small">買或賣<select id="fa" style="width:100%;margin-top:4px"><option>買</option><option>賣</option></select></label><label class="small">股數<input id="fn" inputmode="decimal" style="width:100%;margin-top:4px"></label><label class="small">價格（美元）<input id="fp" inputmode="decimal" style="width:100%;margin-top:4px"></label></div>
+<label class="small" style="display:block;margin-top:12px">為什麼買（或賣）？<input id="fw" placeholder="例：七分好公司，到跌 10% 合理價，十年後我還會繼續用" style="width:100%;margin-top:4px"></label>
+<div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:12px;align-items:center"><button class="btn" id="addBtn">記下這一筆</button><span id="addMsg" role="status" style="color:var(--teal);font-weight:700"></span></div></div>
+<div class="card"><h2>我的買賣紀錄</h2><div class="sub" style="margin-bottom:8px">每一筆都寫下「為什麼」，12 月複盤時回頭看</div><div class="tbl"><table><thead><tr><th>日期</th><th>股票</th><th>動作</th><th>股數</th><th>價格</th><th>為什麼</th></tr></thead><tbody id="logBody"></tbody></table></div></div>
+</div>
+
+<div id="f-review" class="hide">
+<div class="banner"><div class="small">2026 年複盤日｜12 月第一週</div><div style="font-size:22px;font-weight:700">一年下來，你的投資有照計畫走嗎？</div></div>
+<div class="card"><h2>手上的公司，分數變了嗎？</h2>
+<div class="row"><span class="grow">蘋果 AAPL</span><span>去年 8 分 → 今年 <b>8</b> 分　<span class="small">沒變</span></span></div>
+<div class="row"><span class="grow">Google GOOG</span><span>去年 7 分 → 今年 <b>7.5</b> 分　<b style="color:var(--teal)">變好</b></span></div>
+<div class="row"><span class="grow">Meta META</span><span>去年 7 分 → 今年 <b>6.5</b> 分　<b style="color:var(--warn)">跌破 7 分，要重看</b></span></div></div>
+<div class="grid"><div class="card" style="margin:0"><h2>今年存了多少</h2><div>目標 NT$84,000（每月 7,000）</div><div class="bar" style="height:14px"><i style="width:93%;height:14px"></i></div><div>實際 NT$78,000，達成 93%</div></div>
+<div class="card" style="margin:0"><h2>退休進度</h2><div>照現在的速度，退休後每月可花多少？</div><a href="https://yoyomammy.github.io/retire-plan/" target="_blank" rel="noopener">打開退休規劃試算</a></div></div>
+<div class="card" style="margin-top:16px"><h2>複盤清單</h2>
+<div class="check"><input type="checkbox" id="c1"><label for="c1">重看手上每家公司的分數，跌破 7 分的要想想要不要留</label></div>
+<div class="check"><input type="checkbox" id="c2"><label for="c2">對照目標菜盤和現在菜盤，明年先加碼哪幾隻</label></div>
+<div class="check"><input type="checkbox" id="c3"><label for="c3">回頭看今年每一筆買賣的理由，有沒有照計畫</label></div>
+<div class="check"><input type="checkbox" id="c4"><label for="c4">回頭看財報筆記裡，自己查過的「掉下來的原因」</label></div>
+<div class="check"><input type="checkbox" id="c5"><label for="c5">更新退休規劃試算，寫下明年每月要存多少</label></div></div>
+</div>
+</section>
+
+<!-- ========== 學員專區 ========== -->
+<section id="p-student" class="hide">
+<div class="card"><h1>學員專區</h1><div class="sub">買課之後，預習、看直播、找學習資源都在這裡，不用再翻 LINE 記事本</div></div>
+<div class="mem-only">
+<div class="card"><h2>新生第一步</h2><div class="sub" style="margin-bottom:6px">剛加入，先做這幾件事，做完打勾</div>
+<div class="check"><input type="checkbox" id="n1"><label for="n1">加入學員 LINE 群，自我介紹</label></div>
+<div class="check"><input type="checkbox" id="n2"><label for="n2">用報名的 email 登入財報網站</label></div>
+<div class="check"><input type="checkbox" id="n3"><label for="n3">看完「上課前要準備的事」</label></div>
+<div class="check"><input type="checkbox" id="n4"><label for="n4">[優優之後補上]</label></div></div>
+<div class="card"><h2>上課前要準備的事</h2><div class="sub">[優優之後補上：例如先預習哪幾支影片、帶什麼東西]</div></div>
+<div class="card"><h2>學習資源</h2>
+<div class="row"><span class="grow">實體課回放</span><a class="btn line" href="https://youtube.com/playlist?list=PLlIIK6pBpahPHKvy6Ire8PikTThhC3w3X" target="_blank" rel="noopener">打開播放清單</a></div>
+<div class="row"><span class="grow">每月投資討論會回放</span><span class="small">[連結之後補上]</span></div></div>
+</div>
+<div class="card"><h2>每月直播</h2><div class="sub" style="margin-bottom:10px">每個月優優研究一家公司。標題大家都看得到，回放要學員才能看；陪跑兩年到期沒續，就看不到了。</div>
+<div class="tabs" id="yearTabs"></div><div id="liveList"></div></div>
+</section>
+
+<!-- ========== 課程與活動 ========== -->
+<section id="p-course" class="hide">
+<div class="card" style="background:var(--teal);color:#fff;border:0">
+<div class="small" style="color:#DCEBE7">課程與活動</div>
+<h1 style="font-size:30px">美股聚寶盆</h1>
+<div style="font-size:18px">兩年投資陪跑班</div>
+<div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:10px"><a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLScqw2ddBTnrtwa7NlURSAVDTajgk8qY8LkesAqq5bL4re3nWw/viewform" target="_blank" rel="noopener" style="background:#fff;color:var(--teal)">報名週日說明會</a><span class="btn line" style="background:transparent;color:#fff;border-color:#fff;cursor:default">陪跑班報名表準備中</span></div>
+</div>
+<div class="grid">
+<div class="card" style="margin:0"><h2>適合誰</h2><ul style="margin:0;padding-left:20px"><li>想投資美股，但不知道從哪開始</li><li>不想每天盯盤、被新聞影響</li><li>想有一套自己判斷好公司的方法</li></ul></div>
+<div class="card" style="margin:0"><h2>學完會得到什麼</h2><ul style="margin:0;padding-left:20px"><li>看財報，找出體質好的公司</li><li>看懂護城河，判斷十年後還在不在</li><li>算出合理價，知道多少錢可以買</li><li>排出自己的菜盤，知道錢怎麼分</li></ul></div>
+<div class="card" style="margin:0"><h2>兩年怎麼陪你</h2><ul style="margin:0;padding-left:20px"><li>每月一次實體課</li><li>每月一次直播，研究一家公司</li><li>學員 LINE 群，有問題一起討論</li><li>財報網站兩年免費用</li></ul></div>
+</div>
+<div class="card" style="margin-top:16px"><h2>週日說明會</h2>
+<div>每週日晚上 7:00～9:00，線上 Google Meet</div>
+<div style="margin-top:6px;font-size:18px">下一場：<b id="nextSession"></b></div>
+<div class="small">場次由優優每個月在後台更新</div>
+<div class="grid" style="margin-top:12px">
+<div class="box" style="background:#FFF8EC"><b>來之前</b><ul style="margin:6px 0 0;padding-left:20px"><li>想投資美股，但不知道買什麼</li><li>怕看不懂、怕太難</li><li>擔心錢和未來</li></ul></div>
+<div class="box" style="background:#EEF6F3"><b>聽完之後</b><ul style="margin:6px 0 0;padding-left:20px"><li>知道從哪裡開始、照什麼步驟</li><li>不用盯盤，也不用一直焦慮</li><li>有一套具體可以照著做的方法</li></ul></div>
+</div>
+<div class="sub" style="margin-top:6px">報名後加 LINE 官方帳號，輸入「直播」就能領取連結。不確定適不適合，先來聽聽看。</div>
+<a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLScqw2ddBTnrtwa7NlURSAVDTajgk8qY8LkesAqq5bL4re3nWw/viewform" target="_blank" rel="noopener" style="margin-top:10px">報名週日說明會</a></div>
+<div class="card"><h2>會員訂閱說明</h2>
+<div class="tbl"><table style="min-width:520px"><thead><tr><th></th><th>每月直播、學員專區</th><th>財報網站</th></tr></thead><tbody>
+<tr><td>陪跑班學員，兩年內</td><td>✓</td><td>✓</td></tr>
+<tr><td>兩年後</td><td>續聽直播（價格之後公布）</td><td>每月 US$4.9</td></tr>
+<tr><td>終身會員</td><td>✓ 永久</td><td>免費體驗一個月，之後每月 US$4.9</td></tr>
+</tbody></table></div>
+<div class="small" style="margin-top:6px">財報網站只開放給上過課的學員訂閱。</div></div>
+<div class="card"><h2>常見問題</h2>
+<details><summary style="min-height:44px;cursor:pointer;padding:10px 0">費用多少？可以分期嗎？</summary><div class="sub" style="padding-bottom:10px">說明會公布限定方案。[優優之後補上]</div></details>
+<details><summary style="min-height:44px;cursor:pointer;padding:10px 0">實體課在哪裡、幾點？</summary><div class="sub" style="padding-bottom:10px">[優優之後補上]</div></details>
+<details><summary style="min-height:44px;cursor:pointer;padding:10px 0">聽不懂可以看回放嗎？</summary><div class="sub" style="padding-bottom:10px">可以，實體課和每月直播都有回放，放在學員專區。</div></details>
+<details><summary style="min-height:44px;cursor:pointer;padding:10px 0">說明會要下載什麼嗎？</summary><div class="sub" style="padding-bottom:10px">用 Google Meet，手機需要 Google Meet App，電腦用瀏覽器打開就可以。</div></details>
+<details><summary style="min-height:44px;cursor:pointer;padding:10px 0">禮物去哪裡領？</summary><div class="sub" style="padding-bottom:10px">[優優之後補上]</div></details>
+</div>
+</section>
+
+<div class="feedback">
+<h2>用完了嗎？請告訴優優你的想法</h2>
+<div class="sub">在 LINE 群回覆這幾題就好，一題一句也可以：</div>
+<ol style="margin:8px 0 0;padding-left:22px">
+<li>四個區（百科、財報網站、學員專區、課程與活動）你最常會用哪一個？</li>
+<li>哪一個功能你最想用？為什麼？</li>
+<li>哪裡看不懂，或用起來卡卡的？</li>
+<li>免費和學員的差別，你看得出來嗎？</li>
+<li>還希望多什麼？</li>
+</ol>
+</div>
+<footer>本頁僅供學習練習使用，不構成投資建議。© 優優媽咪，僅供學員體驗，請勿轉傳。</footer>
+</main>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const num=v=>{const x=parseFloat(v);return isNaN(x)?0:x};
+const money=v=>'$'+Math.round(v).toLocaleString('en-US');
+const LOCK='<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6B7570" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+const S={member:false,page:'wiki',read:{},last:null,fav:true,believe:true,conclusion:'good',notes:{},
+fin:{eps:'1',fcf:'1',div:'1',nm:'1',de:'0',ic:'1',roic:'1'},
+moat:{brand:true,patent:false,cost:false,net:false,habit:true,niche:false},risk:{policy:false,tech:true},
+targets:{VOO:20,COST:10,MSFT:5,GOOG:10,META:5,AAPL:10,TSM:15,NVDA:15,'BRK.B':10},
+trades:[{d:'2026/06/08',s:'GOOG',a:'買',n:16,p:362.2,why:'七分好公司，到跌 10% 合理價；十年後我還會繼續用'},{d:'2026/05/12',s:'NVDA',a:'買',n:110,p:120,why:'鈴鐺 2 響了，財報重看過還是 7 分以上'},{d:'2026/04/15',s:'VOO',a:'買',n:45,p:560,why:'每月定期定額，大盤打底'},{d:'2026/03/02',s:'COST',a:'買',n:9,p:900,why:'鈴鐺 3 響了，到我的買進價'},{d:'2026/02/10',s:'AAPL',a:'買',n:45,p:230,why:'到合理價區間'},{d:'2026/02/10',s:'TSM',a:'買',n:38,p:200,why:'到跌 10% 價'},{d:'2026/01/25',s:'META',a:'賣',n:2,p:650,why:'菜盤超過目標，賣一點拉回比例'},{d:'2026/01/20',s:'MSFT',a:'買',n:13,p:420,why:'到合理價區間'},{d:'2026/01/20',s:'BRK.B',a:'買',n:16,p:450,why:'穩定股，替代一部分大盤'},{d:'2026/01/20',s:'META',a:'買',n:7,p:600,why:'到合理價區間'}]};
+
+/* ---------- 百科資料 ---------- */
+const ST=[
+['1','只買台股不夠嗎？','台股很好，但美股有美股的優勢',['只投資台股，不夠嗎？','美股比台股多了什麼優勢？','美股手續費、稅和隱形成本那麼高，是不是投台股就好？','美股沒有跌停，不是很可怕嗎？','看不懂英文和美股新聞，也能投資嗎？','投資美股要擔心匯率嗎？','什麼是價值投資？為什麼能安心睡覺？','不投資，錢會怎樣？（複利和通膨）','儲蓄險要不要解約，拿去投資美股？','理專推薦的基金要買嗎？','優優是誰？為什麼可以相信她？']],
+['2','還沒開戶，該從哪開始？','從零到買第一股要做的事',['我不知道怎麼開始：先看你在哪一步','從零到買第一股，要做哪幾件事？','不想盯盤，也能投資嗎？','每月只有 3000 元，也能投資美股嗎？','複委託和海外券商怎麼選？','Firstrade 怎麼開戶？','Firstrade 開好後要設定什麼？W8 表格怎麼填？','國泰複委託怎麼開戶？','約定帳戶怎麼線上設定？','怎麼從台灣匯錢到 Firstrade？','錢怎麼從 Firstrade 拿回台灣？','很怕在手機按錯，錢就不見了？']],
+['3','開好戶了，第一筆買什麼？','先用大盤 ETF 打底，再學下單',['開好戶了，下一步呢？優優會報明牌嗎？','美股 ETF 該怎麼開始？先認識哪幾檔？','00646 和 VOO 十年差多少？','00646、00662、VOO 怎麼選？','ETF 要買幾檔？VOO、QQQ、VT 怎麼選？','QQQ 和 QQQM 差在哪？','ETF 一定能分散風險嗎？','有沒有打敗大盤的 ETF？','怎麼買美股？交易基本知識','Firstrade 怎麼下單？','複委託手續費有什麼坑？','複委託怎麼設定定期定額？','定期定額，要固定時間買還是等跌再買？','怎麼看自己今年賺多少？']],
+['4','想買好公司，怎麼挑？','財報、護城河、合理價',['怎麼從生活中找到看得懂的公司？','怎麼判斷一家公司能不能買？','財報要看哪些數據？','怎麼看一家公司的護城河？','什麼時候可以買？合理價怎麼看？','想領股息，可以買哪些股息股？','股價便宜的公司比較好買嗎？']],
+['5','我的錢該怎麼分？','每月存的錢，接下來投什麼',['每月只能存 7000 元，該怎麼分配？','月薪 9 萬，該怎麼投資？','我 45 歲才開始，還來得及退休嗎？','要存多少錢才能退休？','大盤 ETF 和個股，各放多少？','台股和美股要怎麼配？','雞蛋要分籃子，只買美股也算分散嗎？','除了退休，旅遊、孩子學費怎麼一起規劃？','緊急預備金、父母醫療費要先留多少？','退休後，美股的錢要一次領還是分開領？','上班族怎麼做到被動收入？','可以借錢投資嗎？']],
+['6','什麼時候賣股票？套牢怎麼處理？','買了之後怎麼顧',['股市大跌，我該怎麼辦？','什麼時候該賣？漲到高點要賣嗎？','套牢了怎麼辦？賠錢的股票要賣嗎？','要不要加碼？怎麼加碼？']],
+['7','要繳什麼稅？錢怎麼留給家人？','稅和傳承',['投資美股要繳哪些稅？','30% 股息稅，投資美股還划算嗎？','ADR 是什麼？哪些公司不用繳股息稅？','投資美股怎麼合法避稅？','海外帳戶的錢，過世後家人怎麼拿回來？','怎麼幫孩子投資？未成年可以開戶嗎？']]];
+const MONEY=['你不是沒錢投資，而是忘了先把錢留下來','夫妻怎麼談錢、管錢？','投資會不會毀掉生活？'];
+const TOP=[['2',4],['2',5],['3',0],['5',0],['4',4]];
+const CTA=s=>(['4','5','6'].includes(s)?['了解美股聚寶盆','course']:['加入免費 LINE 群','line']);
+const SAMPLE={'2-4':{one:'可以。先用定期定額買美國大盤 ETF 打底，每月 3000 元也能開始。',body:'就像存零錢筒：一開始每次投的不多，但時間拉長，加上複利，小錢也會長大。重點不是一次投多少，而是有沒有開始、能不能持續。',media:'IG 短影音：每個月只有 3000 塊，怎麼開始投資美股'}};
+
+function renderWikiHome(){
+$('stationGrid').innerHTML=ST.map(([id,t,sub,list])=>{const n=list.filter((_,i)=>S.read[id+'-'+i]).length;
+return '<button class="station" data-st="'+id+'"><div class="small">第 '+id+' 站</div><b style="font-size:17px">'+t+'</b><div class="small">'+sub+'</div><div class="small" style="margin-top:6px">你看了 '+n+'／'+list.length+' 篇</div><div class="bar"><i style="width:'+(n/list.length*100)+'%"></i></div></button>';}).join('');
+document.querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>openStation(b.dataset.st));
+$('topList').innerHTML=TOP.map(([s,i],k)=>'<button class="entry" data-open="'+s+'-'+i+'"><span class="ck">'+(k+1)+'</span>'+ST[s-1][3][i]+'</button>').join('');
+$('moneyList').innerHTML=MONEY.map(t=>'<div class="entry" style="cursor:default">'+t+'</div>').join('');
+document.querySelectorAll('#topList [data-open]').forEach(b=>b.onclick=()=>openEntry(b.dataset.open));
+if(S.last){const [s,i]=S.last.split('-');$('continueBox').classList.remove('hide');$('continueBox').innerHTML='<div class="small">上次看到這裡（記在你的手機裡，不用登入）</div><button class="entry" id="contBtn" style="font-weight:700">👉 繼續看：'+ST[s-1][3][i]+'</button>';$('contBtn').onclick=()=>openEntry(S.last);}
+}
+function show(id){['wikiHome','stationPage','entryPage'].forEach(x=>$(x).classList.toggle('hide',x!==id));window.scrollTo(0,0);}
+function openStation(id){const [_,t,sub,list]=ST[id-1];const n=list.filter((_,i)=>S.read[id+'-'+i]).length;
+$('stationPage').innerHTML='<button class="pill" id="backHome">← 百科首頁</button><div class="card" style="margin-top:12px"><div class="small">第 '+id+' 站</div><h1>'+t+'</h1><div class="sub">'+sub+'</div><div class="small" style="margin-top:8px">你看了 '+n+'／'+list.length+' 篇</div><div class="bar"><i style="width:'+(n/list.length*100)+'%"></i></div></div><div class="card">'+list.map((e,i)=>'<button class="entry" data-open="'+id+'-'+i+'"><span class="ck">'+(S.read[id+'-'+i]?'✓':'')+'</span>'+e+'</button>').join('')+'</div>';
+$('backHome').onclick=()=>{renderWikiHome();show('wikiHome');};
+document.querySelectorAll('#stationPage [data-open]').forEach(b=>b.onclick=()=>openEntry(b.dataset.open));show('stationPage');}
+function openEntry(key){const [s,i]=key.split('-');S.read[key]=true;S.last=key;const st=ST[s-1];const title=st[3][i];const smp=SAMPLE[key];const next=st[3][+i+1];const cta=CTA(s);
+$('entryPage').innerHTML='<button class="pill" id="backSt">← 第 '+s+' 站</button>'+
+'<div class="card" style="margin-top:12px"><div class="small">第 '+s+' 站・'+st[1]+'</div><h1>'+title+'</h1></div>'+
+'<div class="card"><h3>一句話答案</h3><div style="font-size:17px">'+(smp?smp.one:'[一句話答案：這也是 LINE 關鍵字回覆的內容]')+'</div></div>'+
+'<div class="card"><h3>白話說明</h3><div>'+(smp?smp.body:'[用生活比喻講清楚。體驗版只有「每月只有 3000 元」這篇有示範內容]')+'</div></div>'+
+'<div class="card"><h3>影片／文章</h3><div class="sub">'+(smp?smp.media:'[嵌入 YouTube 影片、連到原文或 IG]')+'</div></div>'+
+'<div class="card"><h3>學員專區</h3>'+(S.member?'<div>[學員才看得到的補充：例如優優的實際做法、用到的工具]</div>':'<div class="lock">'+LOCK+'<div><b>學員才看得到</b><div class="small">例如優優的實際做法、用到的工具</div></div></div>')+'</div>'+
+(next?'<div class="card"><h3>下一步</h3><button class="entry" id="nextBtn" style="font-weight:700">→ '+next+'</button></div>':'')+
+'<div class="card" style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between"><div>'+(cta[1]==='course'?'想有人帶你一步一步做？':'想跟大家一起學？')+'</div><div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><button class="btn" id="ctaBtn">'+cta[0]+'</button><span class="small">'+(cta[1]==='course'?'或 加入免費 LINE 群｜訂閱電子報':'或 訂閱電子報')+'</span></div></div>';
+$('backSt').onclick=()=>openStation(s);
+if(next)$('nextBtn').onclick=()=>openEntry(s+'-'+(+i+1));
+$('ctaBtn').onclick=()=>{if(cta[1]==='course')go('course');};
+show('entryPage');}
+$('search').oninput=()=>{const q=$('search').value.trim();if(!q){$('searchResult').innerHTML='';return;}
+const hits=[];ST.forEach(([id,,,list])=>list.forEach((e,i)=>{if(e.includes(q))hits.push([id+'-'+i,e]);}));
+$('searchResult').innerHTML=hits.length?hits.slice(0,8).map(([k,e])=>'<button class="entry" data-open="'+k+'">'+e+'</button>').join(''):'找不到「'+esc(q)+'」。（正式版會記下找不到的字，優優拿來決定下一篇寫什麼）';
+document.querySelectorAll('#searchResult [data-open]').forEach(b=>b.onclick=()=>openEntry(b.dataset.open));};
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>openStation(b.dataset.go));
+
+/* ---------- 財報 ---------- */
+const PRICES={VOO:699,COST:1003,MSFT:524,GOOG:317,META:700,AAPL:343.46,TSM:290,NVDA:180,'BRK.B':480};
+const TYPE={VOO:'穩定',COST:'穩定',MSFT:'成長',GOOG:'成長',META:'成長',AAPL:'成長',TSM:'成長',NVDA:'成長','BRK.B':'穩定'};
+const COLORS=['#1F5E5B','#2E8B73','#7FB8A6','#C98A2E','#E3B65C','#5B7FA6','#9DB4CE','#A3501A','#8C7A9E'];
+const YRS=[2016,2017,2018,2019,2020,2021,2022,2023,2024,2025];
+const FIN=[
+['eps','EPS 賺錢能力','連續 10 年','整體穩穩向上 +1｜中間掉一年，原因可接受 +1 或 +0.5｜趨勢向下 0','整體穩穩向上','1',[2.08,2.30,2.98,2.97,3.28,5.61,6.11,6.13,6.08,7.46],'$'],
+['fcf','FCF 口袋的錢','連續 10 年','十年為正 +1','有資料的年度都是正數','1',[53.5,51.1,64.1,58.9,73.4,93.0,111.4,99.6,108.8,98.8],'B'],
+['div','Dividends 股息','連續 10 年','十年穩穩發 +1｜不發、越發越少、砍股息 0','十年都有發，而且沒有砍','1',[0.55,0.60,0.68,0.75,0.80,0.85,0.90,0.94,0.98,1.02],'$'],
+['nm','Net Margin 淨利率','連續 10 年','每年 ≥ 20% +1｜≥ 10% 或穩穩向上 +0.5','10 年最低 20.9%，最新 24.3%','1',[21.2,21.1,22.4,21.2,20.9,25.9,25.3,25.3,24.0,24.3],'%'],
+['de','D/E 借錢狀況','最近一年（TTM）','長期負債 ÷ 股東權益 < 0.5 +1','最近一年 D/E = 1.5','0',null],
+['ic','IC 還錢能力','最近一年（TTM）','≥ 10 或 (−) +1｜≥ 4 +0.5','最近一年算不出來（年報沒單獨列利息費用），暫用 2023 年 IC = 29 倍，請確認','1',null],
+['roic','ROIC 賺錢效率','連續 10 年','淨利 ÷（借的錢＋股東的錢）十年都 ≥ 10% +1','10 年最低 18.2%','1',[18.2,19.5,23.0,24.1,27.5,38.0,41.2,40.1,38.5,39.8],'%']];
+const MOATS=[['brand','品牌','漲價也有人買'],['patent','專利特許','只有我能做（專利、政府執照）'],['cost','成本','比對手成本低（規模大、進貨便宜）'],['net','網路','越多人用越值錢（平台）'],['habit','習慣','用習慣了很難換'],['niche','小眾市場','市場小，只容得下我一家']];
+const RISKS=[['policy','政策風險','能源、菸、酒、醫療、生技、武器','不屬於能源、菸酒、醫療、生技、武器，不扣分'],['tech','科技風險','軟體、半導體、晶片、手機電腦、藥廠；快時尚等新潮流','這家公司屬於「手機電腦」，依講義扣 1 分']];
+const lbl=v=>v==='0'?'+0':'+'+v;
+function chart(vals,flag){const w=420,h=150,pl=36,pr=10,pt=12,pb=24;const mn=Math.min(...vals),mx=Math.max(...vals);const X=i=>pl+i*(w-pl-pr)/(vals.length-1);const Y=v=>pt+(mx===mn?0.5:(mx-v)/(mx-mn))*(h-pt-pb);
+let s='<svg class="chart" viewBox="0 0 '+w+' '+h+'" role="img" aria-label="10 年走勢圖"><line x1="'+pl+'" y1="'+(h-pb)+'" x2="'+(w-pr)+'" y2="'+(h-pb)+'" stroke="#DDE1DA"/>';
+s+='<polyline fill="none" stroke="#2E8B73" stroke-width="2" points="'+vals.map((v,i)=>X(i)+','+Y(v)).join(' ')+'"/>';
+const drops=[];vals.forEach((v,i)=>{const drop=flag&&i>0&&v<vals[i-1]*0.95;if(drop)drops.push(i);s+='<circle cx="'+X(i)+'" cy="'+Y(v)+'" r="'+(drop?5:3)+'" fill="'+(drop?'#C9641E':'#2E8B73')+'"/>';});
+s+='<text x="'+(pl-6)+'" y="'+(Y(mx)+4)+'" font-size="11" text-anchor="end" fill="#4A5656">'+mx+'</text><text x="'+(pl-6)+'" y="'+(Y(mn)+4)+'" font-size="11" text-anchor="end" fill="#4A5656">'+mn+'</text>';
+[0,3,6,9].forEach(i=>{s+='<text x="'+X(i)+'" y="'+(h-6)+'" font-size="11" text-anchor="middle" fill="#4A5656">'+YRS[i]+'</text>';});
+return [s+'</svg>',drops];}
+function scores(){const fin=FIN.reduce((a,d)=>a+num(S.fin[d[0]]),0);const strong=MOATS.filter(m=>S.moat[m[0]]).length;const moat=Math.min(3,(strong===0?0:strong===1?2:3)+(S.believe?1:0));const risk=Math.min(2,RISKS.filter(r=>S.risk[r[0]]).length);return {fin,moat,risk,total:fin+moat-risk};}
+function renderScores(){const sc=scores();$('favBtn').textContent=S.fav?'★ 已在我的最愛':'☆ 加到我的最愛';
+$('finHead').textContent=sc.fin+' / 7　'+(sc.fin>=6?'超讚':sc.fin>=4?'還不錯':'直接跳過');$('moatHead').textContent=sc.moat+' / 3';$('riskHead').textContent='－'+sc.risk;
+$('totalBanner').innerHTML='<span>財報 <b style="font-size:22px">'+sc.fin+'</b></span><span>＋ 護城河 <b style="font-size:22px">'+sc.moat+'</b></span><span>－ 風險 <b style="font-size:22px">'+sc.risk+'</b></span><span>＝ 總分 <b style="font-size:28px">'+sc.total+'</b> / 10</span><span class="tag" style="background:#fff;color:var(--teal)">'+(sc.total>=7?'7 分以上・好公司':'未達 7 分・觀察')+'</span>';
+$('totalLine').innerHTML='財報 '+sc.fin+' / 7　＋　護城河 '+sc.moat+' / 3　－　風險 '+sc.risk+'　＝　<b style="font-size:24px;color:var(--teal)">'+sc.total+' / 10</b>';}
+function buildFin(){
+$('lockedTitles').innerHTML=[['財報體檢','7 項財報幾分、10 年線圖'],['護城河','有哪些護城河'],['風險評估、總分','是不是 7 分以上的好公司'],['估價分析','多少錢可以買'],['鈴鐺提醒','到你設定的價格寄 email'],['podcast','年報、季報白話講給你聽']].map(([t,d])=>'<div class="lock">'+LOCK+'<div><b>'+t+'</b><div class="small">'+d+'</div></div></div>').join('');
+$('finList').innerHTML=FIN.map(([k,n,per,rule,reason,auto,vals,unit])=>{let ch='',dropsHtml='';
+if(vals){const [svg,drops]=chart(vals,k==='eps');ch='<div style="flex:1 1 300px;min-width:0">'+svg+'<div class="small">10 年走勢（示意數字）</div></div>';
+dropsHtml=drops.map(i=>'<div style="margin-top:8px"><label class="small" for="note-'+k+i+'" style="color:var(--orange);font-weight:700">'+YRS[i]+' 年 EPS 比前一年掉了 5% 以上，請查原因：</label><textarea id="why-'+k+i+'" rows="2" placeholder="我查到的原因…"></textarea></div>').join('');if(k==='eps'&&!drops.length)dropsHtml='<div class="small" style="margin-top:6px">蘋果這 10 年 EPS 沒有一年掉超過 5%，所以沒有跳出「請查原因」。</div>';}dropsHtml+='<div style=\"margin-top:10px\"><label class=\"small\" for=\"note-'+k+'\">我的筆記</label><textarea id=\"note-'+k+'\" rows=\"2\" placeholder=\"我的筆記…（存在你的帳號，12 月複盤會用到）\"></textarea></div>';
+return '<div class="row" style="align-items:flex-start"><div class="grow"><b style="font-size:16px">'+n+'</b> <span class="small">'+per+'</span><div class="small">標準：'+rule+'</div><div style="font-size:13px">自動判斷：'+reason+'</div><div class="small" id="ch-'+k+'" style="color:#8A3A0C"></div>'+dropsHtml+'</div>'+ch+'<label class="small">分數 <select data-sc="'+k+'"><option value="1">+1</option><option value="0.5">+0.5</option><option value="0">+0</option></select></label></div>';}).join('');
+document.querySelectorAll('[data-sc]').forEach(sel=>{const k=sel.dataset.sc;sel.value=S.fin[k];sel.onchange=()=>{S.fin[k]=sel.value;const auto=FIN.find(f=>f[0]===k)[5];$('ch-'+k).textContent=sel.value!==auto?'已手動調整・自動是 '+lbl(auto):'';renderScores();};});
+$('moatList').innerHTML=MOATS.map(([k,n,d])=>'<button class="moat" data-moat="'+k+'" aria-pressed="false"><b></b><div style="font-size:13px">'+d+'</div></button>').join('');
+const pm=()=>document.querySelectorAll('[data-moat]').forEach(b=>{const k=b.dataset.moat,on=S.moat[k];b.classList.toggle('on',on);b.setAttribute('aria-pressed',on);b.querySelector('b').textContent=(on?'✓ ':'○ ')+MOATS.find(m=>m[0]===k)[1];});
+document.querySelectorAll('[data-moat]').forEach(b=>b.onclick=()=>{S.moat[b.dataset.moat]=!S.moat[b.dataset.moat];pm();renderScores();});pm();
+const pb=()=>{$('believeYes').classList.toggle('on',S.believe);$('believeNo').classList.toggle('on',!S.believe);};
+$('believeYes').onclick=()=>{S.believe=true;pb();renderScores();};$('believeNo').onclick=()=>{S.believe=false;pb();renderScores();};pb();
+$('riskList').innerHTML=RISKS.map(([k,n,d,r])=>'<div class="row"><div class="grow"><b>'+n+'</b><div class="small">包含：'+d+'</div><div style="font-size:13px">自動判斷：'+r+'</div></div><button class="pill" data-risk="'+k+'" data-v="1">有（−1）</button><button class="pill" data-risk="'+k+'" data-v="0">沒有</button></div>').join('');
+const pr=()=>document.querySelectorAll('[data-risk]').forEach(b=>b.classList.toggle('on',S.risk[b.dataset.risk]===(b.dataset.v==='1')));
+document.querySelectorAll('[data-risk]').forEach(b=>b.onclick=()=>{S.risk[b.dataset.risk]=b.dataset.v==='1';pr();renderScores();});pr();
+$('conclusions').insertAdjacentHTML('beforeend',[['good','好公司'],['watch','觀察中'],['skip','先跳過']].map(([k,l])=>'<button class="pill" data-con="'+k+'">'+l+'</button>').join(''));
+const pc=()=>document.querySelectorAll('[data-con]').forEach(b=>b.classList.toggle('on',b.dataset.con===S.conclusion));
+document.querySelectorAll('[data-con]').forEach(b=>b.onclick=()=>{S.conclusion=b.dataset.con;pc();});pc();
+$('favBtn').onclick=()=>{S.fav=!S.fav;renderScores();renderFav();};['b1','b2','b4','myBuy'].forEach(id=>$(id).oninput=()=>{renderBells();renderFav();});}
+function renderBells(){const price=343.46;const p3=num($('myBuy').value),p1=p3+num($('b1').value),p2=p3+num($('b2').value),p4=num($('b4').value);
+const set=(id,p,t)=>{if(!p){$(id+'p').textContent='';$(id+'s').textContent='沒設定';$(id+'s').className='tag wait';return false;}const r=price<=p;$(id+'p').textContent=t;$(id+'s').textContent=r?'已響':'等待中';$(id+'s').className='tag '+(r?'rung':'wait');return r;};
+const n=[set('b1',p1,'到 $'+p1+' 通知'),set('b2',p2,'到 $'+p2+' 通知'),set('b3',p3,'到 $'+p3+' 通知'),set('b4',p4,'到 $'+p4+' 通知')].filter(Boolean).length;$('bellSummary').textContent=n?n+' 個鈴鐺響了：蘋果':'目前沒有鈴鐺響';}
+function renderPlate(){const tk=Object.keys(S.targets);const sh={};tk.forEach(t=>sh[t]=0);S.trades.forEach(t=>{if(sh[t.s]===undefined)sh[t.s]=0;sh[t.s]+=(t.a==='買'?1:-1)*num(t.n);});
+const val=tk.map(t=>Math.max(0,sh[t])*PRICES[t]);const sv=val.reduce((a,b)=>a+b,0);const ta=sv+num($('cash').value);$('stockValue').textContent=money(sv);$('totalAssets').textContent=money(ta);
+const nowP=val.map(v=>sv?Math.round(v/sv*100):0);const tP=tk.map(t=>num(S.targets[t]));const sum=tP.reduce((a,b)=>a+b,0);$('tSum').textContent=sum+'%';$('tSum').style.color=sum===100?'var(--teal)':'var(--warn)';
+const pie=arr=>{const s=arr.reduce((a,b)=>a+b,0)||1;let acc=0;return 'conic-gradient('+arr.map((v,i)=>{const a=acc;acc+=v/s*100;return COLORS[i]+' '+a.toFixed(2)+'% '+acc.toFixed(2)+'%';}).join(',')+')';};$('pieT').style.background=pie(tP);$('pieN').style.background=pie(val);
+$('plateBody').innerHTML=tk.map((t,i)=>{const cur=Math.max(0,sh[t]);const tgt=Math.floor(ta*tP[i]/100/PRICES[t]);const need=tgt-cur;const act=need>0?'可加碼，等鈴鐺':need<0?'超過，先不買':'剛好';const col=need>0?'var(--teal)':need<0?'var(--warn)':'var(--mute)';
+return '<tr><td><span class="dot" style="background:'+COLORS[i]+'"></span>'+t+'</td><td>'+TYPE[t]+'</td><td><input data-tg="'+t+'" inputmode="decimal" value="'+S.targets[t]+'" style="width:60px;min-height:40px" aria-label="'+t+' 目標百分比"></td><td>'+nowP[i]+'%</td><td>'+cur+' 股</td><td>'+tgt+' 股</td><td><b>'+(need>0?'再買 '+need+' 股':need<0?'多了 '+(-need)+' 股':'0')+'</b></td><td style="color:'+col+';font-weight:700">'+act+'</td></tr>';}).join('');
+document.querySelectorAll('[data-tg]').forEach(inp=>inp.onchange=()=>{S.targets[inp.dataset.tg]=num(inp.value);renderPlate();});$('fs').innerHTML=tk.map(t=>'<option>'+t+'</option>').join('');}
+function renderLog(){$('logBody').innerHTML=S.trades.map(t=>'<tr><td style="white-space:nowrap">'+t.d+'</td><td>'+t.s+'</td><td>'+t.a+'</td><td>'+t.n+'</td><td>$'+t.p+'</td><td>'+esc(t.why)+'</td></tr>').join('');}
+$('cash').oninput=renderPlate;
+$('addBtn').onclick=()=>{const n=num($('fn').value),p=num($('fp').value);if(!n||!p){$('addMsg').textContent='請填股數和價格';return;}const d=new Date();
+S.trades.unshift({d:d.getFullYear()+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+String(d.getDate()).padStart(2,'0'),s:$('fs').value,a:$('fa').value,n,p,why:$('fw').value||'（沒寫原因）'});$('fn').value='';$('fp').value='';$('fw').value='';$('addMsg').textContent='記好了！「我的菜盤」已經更新';renderLog();renderPlate();};
+let finTab='company';
+document.querySelectorAll('[data-fin]').forEach(b=>b.onclick=()=>{finTab=b.dataset.fin;if(finTab==='fav')renderFav();document.querySelectorAll('[data-fin]').forEach(x=>x.classList.toggle('on',x===b));applyFinTab();});
+function applyFinTab(){['company','fav','plate','log','review'].forEach(t=>$('f-'+t).classList.toggle('hide',!(t===finTab&&(t==='company'||S.member))));$('f-locked').classList.toggle('hide',finTab==='company'||S.member);}
+
+const FAVS=[['COST','Costco',7.5,1003,950,'觀察中'],['MSFT','微軟',8,524,480,'好公司'],['GOOG','Google',7.5,317,300,'好公司']];
+function renderFav(){const rows=[];if(S.fav){const p3=num($('myBuy').value);const n=document.querySelectorAll('#f-company .tag.rung').length;rows.push('<tr><td><button class="entry" id="favApple" style="padding:0;min-height:40px;border:0;color:var(--teal);font-weight:700">蘋果 AAPL →</button></td><td>'+scores().total+' 分</td><td>$343.46</td><td>$'+p3+'</td><td>'+(n?'<span class="tag rung">'+n+' 個響了</span>':'<span class="tag wait">等待中</span>')+'</td><td>'+({good:'好公司',watch:'觀察中',skip:'先跳過'}[S.conclusion])+'</td></tr>');}
+FAVS.forEach(([t,n,sc,pr,buy,con])=>rows.push('<tr><td>'+n+' '+t+'</td><td>'+sc+' 分</td><td>$'+pr+'</td><td>$'+buy+'</td><td><span class="tag wait">等待中</span></td><td>'+con+'</td></tr>'));
+$('favBody').innerHTML=rows.join('');if($('favApple'))$('favApple').onclick=()=>document.querySelector('[data-fin="company"]').click();}
+/* ---------- 學員專區 ---------- */
+const SESSIONS=['2026-10-25','2026-11-01','2026-11-08','2026-11-15','2026-11-22','2026-11-29'];
+(function(){const t=new Date();t.setHours(0,0,0,0);const nx=SESSIONS.map(d=>new Date(d+'T00:00:00')).find(d=>d>=t);$('nextSession').textContent=nx?(nx.getMonth()+1)+'/'+nx.getDate()+'（日）19:00':'下個月場次即將公布';})();
+const LIVES={2026:[['10 月','Costco：會員費怎麼撐起一門生意'],['9 月','微軟：雲端和 AI 的訂閱生意'],['8 月','輝達：為什麼大家都要買它的晶片']],2027:[['1 月','[之後的直播主題]']],2028:[['1 月','[之後的直播主題]']]};
+let liveYear='2026';
+function renderLives(){$('yearTabs').innerHTML=Object.keys(LIVES).map(y=>'<button class="pill'+(y===liveYear?' on':'')+'" data-year="'+y+'">'+y+'</button>').join('');
+document.querySelectorAll('[data-year]').forEach(b=>b.onclick=()=>{liveYear=b.dataset.year;renderLives();});
+$('liveList').innerHTML=LIVES[liveYear].map(([m,t])=>'<div class="row"><span class="grow"><b>'+m+'</b>　'+t+'<span class="small">（示意）</span></span>'+(S.member?'<button class="btn line">▶ 看回放</button>':'<span class="lock" style="padding:8px 12px">'+LOCK+'學員才看得到</span>')+'</div>').join('');}
+
+/* ---------- 共用 ---------- */
+function go(p){S.page=p;document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('on',b.dataset.page===p));['wiki','fin','student','course'].forEach(x=>$('p-'+x).classList.toggle('hide',x!==p));if(p==='wiki'){renderWikiHome();show('wikiHome');}window.scrollTo(0,0);}
+document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>go(b.dataset.page));
+document.querySelectorAll('[data-page-go]').forEach(b=>b.onclick=()=>go(b.dataset.pageGo));
+function applyMode(){$('modeBar').className='mode '+(S.member?'mem':'free');$('modeLabel').textContent=S.member?'學員畫面（已登入）':'免費讀者畫面（沒登入）';$('modeBtn').textContent=S.member?'切換成免費讀者畫面':'切換成學員畫面';
+document.querySelectorAll('.mem-only').forEach(e=>e.classList.toggle('hide',!S.member));document.querySelectorAll('.free-only').forEach(e=>e.classList.toggle('hide',S.member));$('finWelcome').classList.toggle('hide',!S.member);applyFinTab();renderLives();
+if(!$('entryPage').classList.contains('hide')&&S.last)openEntry(S.last);}
+$('modeBtn').onclick=()=>{S.member=!S.member;applyMode();};
+$('diffBtn').onclick=()=>$('diffBox').classList.toggle('hide');
+buildFin();renderScores();renderBells();renderPlate();renderLog();renderWikiHome();applyMode();
+})();
+</script>
+</body>
+</html>
